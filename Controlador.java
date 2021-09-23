@@ -24,6 +24,7 @@ public class Controlador {
         //Instancia de objetos
         Mundo mundo = new Mundo();
         Combatiente combatiente = null;
+        Jugador jugador;
         Vista vista = new Vista();
 
 
@@ -35,8 +36,8 @@ public class Controlador {
             int jugadores = vista.pedirJugadores();
             for (int i = 0; i < jugadores; i++){
                 String tipo = vista.pedirTipo();
-                combatiente = new Combatiente(tipo);
-                mundo.crearCombatiente(combatiente); //Jugadores
+                jugador = new Jugador(tipo);
+                mundo.crearCombatiente(jugador); //Jugadores
                 combatiente.saludar();
             }
             mundo.crearCombatiente();//Enemigos

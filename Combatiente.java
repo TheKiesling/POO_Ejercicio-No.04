@@ -29,7 +29,7 @@ public class Combatiente {
     public Combatiente(String tipo){ 
         this.tipo = tipo;
         if (this.tipo.equals("guerrero")){
-            this.vida = 30;
+            this.vida = 40;
             this.ataque = 4;
             this.especial = "item"; 
         }
@@ -47,13 +47,13 @@ public class Combatiente {
         }
 
         if (this.tipo.equals("valquiria")){
-            this.vida = 30;
+            this.vida = 40;
             this.ataque = 2;
             this.especial = "habilidad";
         }
 
         if (this.tipo.equals("dragon")){
-            this.vida = 40;
+            this.vida = 60;
             this.ataque = 4;
             this.especial = "habilidad";
         }
@@ -75,20 +75,28 @@ public class Combatiente {
         objetivo.dano(this.ataque);
     }
 
+    public void atacar(Combatiente objetivo, int dano){
+        objetivo.dano(dano);
+    }
+
     public void dano(int dano){
         this.vida -= dano;
     }
 
-    public void curar(int cantidad){
-        this.vida += cantidad;
+    public void curar(Combatiente objetivo, int cantidad){
+        objetivo.vida += cantidad;
+    }
+
+    public void incrementar(Combatiente objetivo, int cantidad){
+        objetivo.ataque += cantidad;
     }
 
     public String pasar(){
         return this.tipo +  " : Me prepararé para el siguiente turno";
     }
 
-    public String especial(String habilidad){
-        return this.tipo + " : Ejecutando " + habilidad;
+    public String especial(String habilidad, Combatiente objetivo){
+        return this.tipo + " : Ejecutando " + habilidad + " hacia " + objetivo;
     }
 
     public String toString(String s){
