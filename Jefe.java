@@ -8,41 +8,48 @@
 #      #    ########   ########   #######   ########   #######   #      ##    #########
 */
 
-public class Enemigo extends Combatiente {
+public class Jefe extends Enemigo{
     /** 
     @author: José Pablo Kiesling Lange
-    Nombre del programa: Enemigo.java
+    Nombre del programa: Jefe.java
     @version: 
-        - Creación: 23/09/2021
+        - Creación: 27/09/2021
         - Última modificación: 27/09/2021
 
-    Clase que tiene las propiedades y métodos específicos de los enemigos. Sirve como hijo 
+    Clase que sirve como hijo de enemigo, ya que posee mayor capacidad de aptitudes representadas en los miembros de esta clase
     */
 
     //---------------------------PROPIEDADES-------------------------
-    protected String habilidad;
-    protected int experiencia = 0;
-
-    //---------------------------MÉTODOS------------------------------
+    protected String habilidadExtra;
 
     /*****************************************************************
-     * Enemigo: instancia un enemigo según los requerimientos de la clase padre (combatiente)
+     * Enemigo: instancia un enemigo según los requerimientos de la clase padre (enemigo), que a su vez hereda de combatiente
      * @param tipo
      */
-    public Enemigo(String tipo){
+    public Jefe(String tipo) {
         super(tipo);
-        
+
         //Brujo
         if(this.tipo.equals("brujo"))
-            this.habilidad = "Curar";
-
+            this.habilidadExtra = "incrementar ataque";
+        
         //Valquiria
         if(this.tipo.equals("valquiria"))
-            this.habilidad = "Pico de acero";
+            this.habilidadExtra = "lanza voladora";
 
         //Dragón
         if(this.tipo.equals("dragon"))
-            this.habilidad = "Flecha Venenosa";
+            this.habilidadExtra = "espada ignea";
+
+        this.vida *=2; //Incrementar su vida al doble
+    }
+    //****************************************************************
+
+    /*****************************************************************
+     * dano: metodo overraideado para que el dano que reciba sea menor
+     */
+    public void dano(int dano){
+        this.vida = this.vida - dano + 1;
     }
     //****************************************************************
 
@@ -52,56 +59,50 @@ public class Enemigo extends Combatiente {
     public String especial(String habilidad, Combatiente objetivo){
         //Curar
         if (habilidad.equals("curar") && this.tipo.equals("brujo")){
-            curar(objetivo, 5);
+            curar(objetivo, 10);
             return this.tipo + " : Ejecutando " + habilidad + " hacia " + objetivo;
         }
 
         //Pico de acero
         else if(habilidad.equals("pico de acero") && this.tipo.equals("valquiria")){
-            atacar(objetivo, 4);
+            atacar(objetivo, 8);
             return this.tipo + " : Ejecutando " + habilidad + " hacia " + objetivo;
         }
 
         //Flecha venenosa
         else if(habilidad.equals("flecha venenosa") && this.tipo.equals("dragon")){
-            atacar(objetivo, 3);
+            atacar(objetivo, 6);
             return this.tipo + " : Ejecutando " + habilidad + " hacia " + objetivo;
         }
 
-        //Experiencia
-        else if(habilidad.equals("experiencia")){
-            this.experiencia+=25;
-            return this.tipo + " : Aumentando la experiencia. Ahora la experiencia de " + this.tipo + " es: " + this.experiencia + "/100";
+        //Incrementar ataque
+        else if(habilidad.equals("incrementar ataque") && this.tipo.equals("brujo")){
+            incrementar(objetivo, 4);
+            return this.tipo + " : Ejecutando " + habilidad + " hacia " + objetivo;
+        }
+
+        //Lanza voladora
+        else if (habilidad.equals("lanza voladora") && this.tipo.equals("valquiria")){
+            atacar(objetivo, 10);
+            return this.tipo + " : Ejecutando " + habilidad + " hacia " + objetivo;
+        }
+
+        //Espada ignea
+        else if(habilidad.equals("espada ignea")  && this.tipo.equals("dragon")){
+            atacar(objetivo, 12);
+            return this.tipo + " : Ejecutando " + habilidad + " hacia " + objetivo;
         }
 
         else 
             return this.tipo + " : quizo ejecutar " + habilidad + " hacia " + objetivo + " pero no pudo";
     }
     //****************************************************************
-
+    
     /*****************************************************************
-     * getExperiencia: retorna el valor de la experiencia del enemigo
-     * @return experiencia
+     * saludar: método overraideado que muestra un nuevo saludo de este combatiente
      */
-    public int getExperiencia(){
-        return experiencia;
-    }
-    //****************************************************************
-
-    /*****************************************************************
-     * setExperiencia: asigna el valor de una nueva experiencia al usuario. Es usada para identificar a un enemigo de un jefe
-     * @param experiencia
-     */
-    public void setExperiencia(int experiencia){
-        this.experiencia = experiencia;
-    }
-    //****************************************************************
-
-    /*****************************************************************
-     * getTipo: retorna el tipo del enemigo
-     */
-    public String getTipo(){
-        return this.tipo;
+    public String saludar(){
+        return "Soy: jefe " + this.tipo + " y he entrado a la batalla";
     }
     //****************************************************************
 }
